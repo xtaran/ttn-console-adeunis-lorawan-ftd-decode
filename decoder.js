@@ -7,17 +7,23 @@ function Decoder(bytes, port) {
     function Bin2Dec(n){if(!checkBin(n))return 0;return parseInt(n,2);}
     function Bin2Arr(str){ var a = new Array(str.length); for(var i = 0; i < str.length; i++){ a[i] = (str.toString().substr(i,1) == "1" ? 1 : 0); } return a; }
     function fixNaN(i){ if(isNaN(i)){return 0;}else{return i;}}
-    
+    function Str2HexArr(s) {
+        var a = new Array(0);
+        for (var i = 0; i < s.length; i++) {
+            a.push(s[i].toString(16));
+        }
+        return a;
+    }
+
     var payload = {};
-    //payload.payload_raw = Bin2Arr(bytes);
-    //payload.payload_base64 = bytes;
-    payload.payload_decrypt = bytes.toString();
+    payload.payload_raw = Str2HexArr(bytes);
+    payload.payload_decrypt = payload.payload_raw.join('');
+    payload.debug = bytes;
 
     function parsePayload(payload){
         var str = payload.payload_decrypt;
-        var a = str;
-        //var arr = Bin2Arr(a);
-        var arr = a;
+        var a = Hex2Bin(str);
+        var arr = Bin2Arr(a);
         
         payload.ranger = { 'status': {
             "temperature": fixNaN(arr[0]),
@@ -88,4 +94,12 @@ function Decoder(bytes, port) {
     return parsePayload(payload);
 }
 
-console.log(Decoder([0x8E, 0x1C, 0x00, 0x00, 0x10, 0x66].toString()));
+var data;
+
+data = [0x8E, 0x1C, 0x00, 0x00, 0x10, 0x66];
+console.log(data);
+console.log(Decoder(data));
+
+data = [0xBF, 0x1F, 0x47, 0x22, 0x82, 0x10, 0x00, 0x83, 0x26, 0x10, 0x16, 0x01, 0x01, 0x10, 0x57, 0x26, 0x08];
+console.log(data);
+console.log(Decoder(data));
