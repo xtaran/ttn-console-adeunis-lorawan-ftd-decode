@@ -71,6 +71,7 @@ function Decoder(bytes, port) {
             if(typeof lon_m!=="number") lon_m = 0;
             if(typeof lon_d!=="number") lon_d = 0;
             sign = (str.substr(i/4,1)=="1" ? -1 : 1);
+            payload.ranger.lon_dir = (sign == -1 ? "W" : "E");
             i += 4;
             payload.ranger.lon = sign*(lon_d+(lon_m/60)+(lon_s/6000));
             
