@@ -58,8 +58,8 @@ function Decoder(bytes, port) {
             payload.ranger.lat = sign*(lat_d+(lat_m/60)+(lat_s/60000));
             
             // Get longitude
-            var lon_d = parseInt(str.substr(i/4,3));
-            i += 12;
+            var lon_d = parseInt(str.substr(i/4,2));
+            i += 8;
             var lon_m = parseInt(str.substr(i/4,2));
             i += 8;
             var lon_s = parseInt(str.substr(i/4,2));
