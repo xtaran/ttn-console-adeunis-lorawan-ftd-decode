@@ -14,16 +14,28 @@ function Decoder(bytes, port) {
         }
         return a;
     }
+    function Str2IntArr(s) {
+        var a = new Array(0);
+        for (var i = 0; i < s.length; i++) {
+            a.push(parseInt(s[i].toString(10),10));
+        }
+        return a;
+    }
 
     var payload = {};
-    payload.payload_raw = Str2HexArr(bytes);
-    payload.payload_decrypt = payload.payload_raw.join('');
-    payload.debug = bytes;
+    //payload.payload_raw = bytes;
+    payload.payload_hex_arr = Str2HexArr(bytes);
+    payload.payload_int_arr = Str2IntArr(bytes);
+    payload.payload_decrypt = payload.payload_hex_arr.join('');
 
     function parsePayload(payload){
+        payload.debug = {};
         var str = payload.payload_decrypt;
+        //payload.debug.checkHex = checkHex(str);
         var a = Hex2Bin(str);
+        payload.debug.a = a;
         var arr = Bin2Arr(a);
+        payload.debug.arr = arr;
         
         payload.ranger = { 'status': {
             "temperature": fixNaN(arr[0]),
