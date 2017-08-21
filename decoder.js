@@ -17,8 +17,7 @@ function Decoder(bytes, port) {
 
     var payload = {};
     //payload.payload_raw = bytes;
-    payload.payload_hex_arr = Str2HexArr(bytes);
-    payload.payload_decrypt = payload.payload_hex_arr.join('');
+    payload.payload_decrypt = Str2HexArr(bytes).join('');
 
     function parsePayload(payload){
         var str = payload.payload_decrypt;
